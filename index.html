@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlyList</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0f1117;
+    color:white;
+    font-family:"Pretendard",sans-serif;
+    padding:20px;
+}
+
+header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+h1{
+    font-size:2.5rem;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#999;
+}
+
+.search-box{
+    max-width:700px;
+    margin:0 auto 30px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-size:1rem;
+}
+
+.section{
+    margin-bottom:30px;
+}
+
+.section-title{
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.jpop{
+    background:#2d4a8a;
+}
+
+.anime{
+    background:#8a5a2d;
+}
+
+.vocaloid{
+    background:#39c5bb;
+}
+
+.virtual{
+    background:#8c52ff;
+}
+
+.song{
+    background:#1a1d27;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:8px;
+}
+
+.song-number{
+    color:#f7c948;
+    font-weight:bold;
+}
+
+.song-title{
+    font-size:1.05rem;
+}
+
+.song-artist{
+    color:#aaa;
+    font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>FlyList</h1>
+    <p class="subtitle">by 헤키 & 아르테</p>
+</header>
+
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="곡명, 가수명, TJ번호 검색">
+</div>
+
+<section class="section">
+
+<div class="section-title jpop">
+🎵 J-POP
+</div>
+
+<div class="song">
+<div class="song-number">68058</div>
+<div class="song-title">Pretender</div>
+<div class="song-artist">Official髭男dism</div>
+</div>
+
+<div class="song">
+<div class="song-number">28822</div>
+<div class="song-title">Lemon</div>
+<div class="song-artist">요네즈 켄시</div>
+</div>
+
+<div class="song">
+<div class="song-number">68031</div>
+<div class="song-title">백일 / 白日</div>
+<div class="song-artist">King Gnu</div>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title anime">
+📺 애니메이션
+</div>
+
+<div class="song">
+<div class="song-number">25246</div>
+<div class="song-title">잔혹한 천사의 테제</div>
+<div class="song-artist">신세기 에반게리온 OP</div>
+</div>
+
+<div class="song">
+<div class="song-number">68047</div>
+<div class="song-title">홍련화</div>
+<div class="song-artist">귀멸의 칼날 OP</div>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title vocaloid">
+🎹 보카로
+</div>
+
+<div class="song">
+<div class="song-number">28961</div>
+<div class="song-title">로키 / ロキ</div>
+<div class="song-artist">미키토P feat. 카가미네 린</div>
+</div>
+
+<div class="song">
+<div class="song-number">27984</div>
+<div class="song-title">아스노요조라 초계반</div>
+<div class="song-artist">Orangestar feat. IA</div>
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title virtual">
+⭐ 버츄얼 아티스트
+</div>
+
+<div class="song">
+<div class="song-number">52526</div>
+<div class="song-title">HELP!!</div>
+<div class="song-artist">Kobo Kanaeru</div>
+</div>
+
+</section>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", function(){
+
+const keyword = this.value.toLowerCase();
+
+document.querySelectorAll(".song").forEach(song=>{
+
+const text = song.innerText.toLowerCase();
+
+song.style.display =
+text.includes(keyword)
+? "block"
+: "none";
+
+});
+
+});
+</script>
+
+</body>
+</html>
