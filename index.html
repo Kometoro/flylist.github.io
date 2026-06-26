@@ -1,212 +1,2698 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FlyList</title>
-
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flylist v10 Visual Update</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+*{box-sizing:border-box}
+:root{
+  --bg:#0b0d14;
+  --card:#171a23;
+  --line:rgba(255,255,255,.10);
+  --text:#f4f4f5;
+  --muted:#a1a1aa;
+  --miku:#39f5d1;
+  --virtual:#a78bfa;
+  --anime:#ffb454;
+  --jpop:#ff5c8a;
+  --other:#cbd5e1;
 }
-
 body{
-    background:#0f1117;
-    color:white;
-    font-family:"Pretendard",sans-serif;
-    padding:20px;
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(57,245,209,.13), transparent 30%),
+    radial-gradient(circle at 95% 10%, rgba(255,92,138,.12), transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+  -webkit-text-size-adjust:100%;
 }
-
 header{
-    text-align:center;
-    margin-bottom:30px;
+  padding:24px 14px 14px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(57,245,209,.16), transparent 28%),
+    radial-gradient(circle at 100% 0%, rgba(255,92,138,.18), transparent 30%),
+    linear-gradient(180deg, rgba(11,13,20,.98), rgba(11,13,20,.78));
 }
-
 h1{
-    font-size:2.5rem;
-    margin-bottom:10px;
+  margin:0;
+  font-size:44px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-.075em;
 }
-
-.subtitle{
-    color:#999;
+h1 .fly{
+  color:#ffffff;
+  text-shadow:0 0 18px rgba(255,255,255,.14);
 }
-
-.search-box{
-    max-width:700px;
-    margin:0 auto 30px;
+h1 .list{
+  background:linear-gradient(135deg, var(--miku), #7dd3fc 35%, #c084fc 68%, var(--jpop));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 0 24px rgba(125,211,252,.16);
 }
-
-input{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    font-size:1rem;
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+  border-radius:22px;
+  padding:18px 16px 16px;
+  box-shadow:0 18px 40px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.05);
 }
-
-.section{
-    margin-bottom:30px;
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:-20% auto auto -10%;
+  width:180px;
+  height:180px;
+  background:radial-gradient(circle, rgba(57,245,209,.22), transparent 60%);
+  pointer-events:none;
 }
-
-.section-title{
-    padding:12px;
-    border-radius:10px;
-    font-weight:bold;
-    margin-bottom:10px;
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:auto -8% -30% auto;
+  width:220px;
+  height:220px;
+  background:radial-gradient(circle, rgba(255,92,138,.18), transparent 60%);
+  pointer-events:none;
 }
-
-.jpop{
-    background:#2d4a8a;
+.hero-top{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
 }
-
-.anime{
-    background:#8a5a2d;
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.05);
+  color:#dbeafe;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.04em;
 }
-
-.vocaloid{
-    background:#39c5bb;
+.hero-badge.soft{
+  color:#e9d5ff;
 }
-
-.virtual{
-    background:#8c52ff;
+.hero-dot{
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:var(--jpop);
+  box-shadow:0 0 10px rgba(255,92,138,.5);
 }
-
+.tagline{
+  position:relative;
+  z-index:1;
+  margin-top:8px;
+  color:#ffffff;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+.desc{
+  position:relative;
+  z-index:1;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+  margin-top:8px;
+}
+.stats{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-top:12px;
+  padding-bottom:2px;
+}
+.stat{flex:0 0 auto;border:1px solid var(--line);background:rgba(21,25,35,.92);border-radius:13px;padding:8px 10px;font-size:12px;color:#d4d4d8;backdrop-filter:blur(6px)}
+.stat b{font-size:16px;color:white}
+.nav{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;-webkit-overflow-scrolling:touch}
+.nav a{flex:0 0 auto;color:#071018;text-decoration:none;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:850}
+.nav a.sec-vocalo{background:var(--miku)}
+.nav a.sec-virtual{background:linear-gradient(135deg,var(--virtual),#7dd3fc)}
+.nav a.sec-anime{background:var(--anime)}
+.nav a.sec-jpop{background:var(--jpop)}
+.nav a.sec-other{background:var(--other)}
+.tip{margin:12px 14px;padding:12px;border:1px solid var(--line);background:#151923;border-radius:14px;color:#d4d4d8;font-size:12px;line-height:1.55}
+main{padding:0 10px 36px}
+section{margin-top:26px;scroll-margin-top:12px}
+h2{font-size:21px;margin:0 0 10px;letter-spacing:-.045em;display:flex;align-items:center;gap:8px}
+h2:before{content:"";width:7px;height:22px;border-radius:99px;display:inline-block;background:var(--other)}
+.sec-vocalo h2:before{background:var(--miku)}
+.sec-virtual h2:before{background:linear-gradient(var(--virtual),#7dd3fc)}
+.sec-anime h2:before{background:var(--anime)}
+.sec-jpop h2:before{background:var(--jpop)}
+h2 small,h3 small{font-size:12px;color:var(--muted)}
+h3{color:#e5e7eb;font-size:15px;margin:18px 0 8px;border-left:3px solid currentColor;padding-left:8px}
+.sec-vocalo h3{color:var(--miku)}
+.sec-virtual h3{color:var(--virtual)}
+.sec-anime h3{color:var(--anime)}
+.sec-jpop h3{color:var(--jpop)}
+.list{display:flex;flex-direction:column;gap:8px}
 .song{
-    background:#1a1d27;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:8px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  border:1px solid var(--line);
+  background:rgba(23,26,35,.94);
+  border-radius:15px;
+  padding:11px;
+}
+.num{
+  flex:0 0 auto;
+  min-width:60px;
+  text-align:center;
+  border-radius:999px;
+  color:#071018;
+  background:#e5e7eb;
+  font-size:16px;
+  font-weight:950;
+  padding:7px 8px;
+  user-select:text;
+  -webkit-user-select:text;
+}
+.sec-vocalo .num{background:var(--miku)}
+.sec-virtual .num{background:linear-gradient(135deg,var(--virtual),#7dd3fc)}
+.sec-anime .num{background:var(--anime)}
+.sec-jpop .num{background:var(--jpop);color:white}
+.body{min-width:0;flex:1}
+.ko{font-size:16px;font-weight:850;line-height:1.35;word-break:keep-all}
+.orig{color:#d7dae2;font-size:13px;line-height:1.35;margin-top:3px;word-break:break-word}
+.artist{color:var(--muted);font-size:12px;margin-top:3px;line-height:1.35}
+.chip{display:inline-block;margin-top:7px;border-radius:999px;padding:4px 7px;font-size:11px;background:#202637;color:#dbeafe}
+.sec-vocalo .chip{color:#bffff3}
+.sec-virtual .chip{color:#ddd6fe}
+.sec-anime .chip{color:#ffe3b0}
+.sec-jpop .chip{color:#ffd4e0}
+.top{position:fixed;right:12px;bottom:12px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#72e6ff;color:#071018;text-decoration:none;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+@media(min-width:720px){header,main{width:min(760px,100%);margin:0 auto}}
+
+.footer{
+  margin:28px 10px 8px;
+  padding:14px 6px 0;
+  border-top:1px solid rgba(255,255,255,.08);
+  text-align:center;
+  color:#8f96a3;
+  font-size:12px;
+  line-height:1.6;
+}
+.footer b{
+  color:#e5e7eb;
+  font-weight:700;
 }
 
-.song-number{
-    color:#f7c948;
-    font-weight:bold;
-}
-
-.song-title{
-    font-size:1.05rem;
-}
-
-.song-artist{
-    color:#aaa;
-    font-size:0.9rem;
-}
 </style>
 </head>
-
-<body>
+<body id="top">
 
 <header>
-    <h1>FlyList</h1>
-    <p class="subtitle">by 헤키 & 아르테</p>
+  <div class="hero">
+    <div class="hero-top">
+      <span class="hero-badge">TJ SONG BOOK</span>
+      <span class="hero-dot"></span>
+      <span class="hero-badge soft">PERSONAL EDITION</span>
+    </div>
+    <h1><span class="fly">Fly</span><span class="list">list</span></h1>
+    <div class="tagline">Sing what you want, find it fast.</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>243</b>곡</div>
+    <div class="stat"><b>14</b> 보카로</div>
+    <div class="stat"><b>6</b> 버츄얼 아티스트</div>
+    <div class="stat"><b>23</b> 애니메이션</div>
+    <div class="stat"><b>197</b> J-POP</div>
+    <div class="stat"><b>3</b> 기타</div>
+  </div>
+  <nav class="nav"><a class="sec-vocalo" href="#보카로">보카로</a><a class="sec-virtual" href="#버츄얼-아티스트">버츄얼 아티스트</a><a class="sec-anime" href="#애니메이션">애니메이션</a><a class="sec-jpop" href="#j-pop">J-POP</a><a class="sec-other" href="#기타">기타</a></nav>
 </header>
 
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="곡명, 가수명, TJ번호 검색">
-</div>
-
-<section class="section">
-
-<div class="section-title jpop">
-🎵 J-POP
+<div class="tip">검색은 브라우저의 <b>페이지 내 검색</b>을 사용해줘.</div>
+<main>
+<section id="보카로" class="sec-vocalo">
+  <h2>보카로 <small>30</small></h2>
+  <div class="list">
+<div class="song">
+  <div class="num">28397</div>
+  <div class="body">
+    <div class="ko">천성의 약함</div>
+    <div class="orig">天ノ弱</div>
+    <div class="artist">164 feat. GUMI</div>
+    <div class="chip">164</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">68058</div>
-<div class="song-title">Pretender</div>
-<div class="song-artist">Official髭男dism</div>
+  <div class="num">28424</div>
+  <div class="body">
+    <div class="ko">연애재판</div>
+    <div class="orig">恋愛裁判</div>
+    <div class="artist">40mP feat. 初音ミク</div>
+    <div class="chip">40mP</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">28822</div>
-<div class="song-title">Lemon</div>
-<div class="song-artist">요네즈 켄시</div>
+  <div class="num">28109</div>
+  <div class="body">
+    <div class="ko">Ray</div>
+    <div class="orig">Ray</div>
+    <div class="artist">BUMP OF CHICKEN feat. 初音ミク</div>
+    <div class="chip">BUMP OF CHICKEN</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">68031</div>
-<div class="song-title">백일 / 白日</div>
-<div class="song-artist">King Gnu</div>
+  <div class="num">28747</div>
+  <div class="body">
+    <div class="ko">히바나</div>
+    <div class="orig">ヒバナ</div>
+    <div class="artist">DECO*27 feat. 初音ミク</div>
+    <div class="chip">DECO*27</div>
+  </div>
 </div>
 
+<div class="song">
+  <div class="num">52468</div>
+  <div class="body">
+    <div class="ko">모니터링</div>
+    <div class="orig">モニタリング</div>
+    <div class="artist">DECO*27 feat. 初音ミク</div>
+    <div class="chip">DECO*27</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52520</div>
+  <div class="body">
+    <div class="ko">래빗 홀</div>
+    <div class="orig">ラビットホール</div>
+    <div class="artist">DECO*27 feat. 初音ミク</div>
+    <div class="chip">DECO*27</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52515</div>
+  <div class="body">
+    <div class="ko">뱀파이어</div>
+    <div class="orig">ヴァンパイア</div>
+    <div class="artist">DECO*27 feat. 初音ミク</div>
+    <div class="chip">DECO*27</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28676</div>
+  <div class="body">
+    <div class="ko">망상감상대상연맹</div>
+    <div class="orig">妄想感傷代償連盟</div>
+    <div class="artist">DECO*27 feat. 初音ミク</div>
+    <div class="chip">DECO*27</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27289</div>
+  <div class="body">
+    <div class="ko">해피 신디사이저</div>
+    <div class="orig">ハッピーシンセサイザ</div>
+    <div class="artist">EasyPop feat. 巡音ルカ, GUMI</div>
+    <div class="chip">EasyPop</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52470</div>
+  <div class="body">
+    <div class="ko">KING</div>
+    <div class="orig">KING</div>
+    <div class="artist">Kanaria feat. GUMI</div>
+    <div class="chip">Kanaria</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52465</div>
+  <div class="body">
+    <div class="ko">술에 취하지 않고</div>
+    <div class="orig">酔いどれ知らず</div>
+    <div class="artist">Kanaria feat. GUMI</div>
+    <div class="chip">Kanaria</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27984</div>
+  <div class="body">
+    <div class="ko">아스노요조라 초계반</div>
+    <div class="orig">アスノヨゾラ哨戒班</div>
+    <div class="artist">Orangestar feat. IA</div>
+    <div class="chip">Orangestar</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52516</div>
+  <div class="body">
+    <div class="ko">PPPP</div>
+    <div class="orig">PPPP</div>
+    <div class="artist">TAK feat. 初音ミク, 重音テト</div>
+    <div class="chip">TAK</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27030</div>
+  <div class="body">
+    <div class="ko">로미오와 신데렐라</div>
+    <div class="orig">ロミオとシンデレラ</div>
+    <div class="artist">doriko feat. 初音ミク</div>
+    <div class="chip">doriko</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28318</div>
+  <div class="body">
+    <div class="ko">육조 년과 하룻밤 이야기</div>
+    <div class="orig">六兆年と一夜物語</div>
+    <div class="artist">kemu feat. IA</div>
+    <div class="chip">kemu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27239</div>
+  <div class="body">
+    <div class="ko">롤링걸</div>
+    <div class="orig">ローリンガール</div>
+    <div class="artist">wowaka feat. 初音ミク</div>
+    <div class="chip">wowaka</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52506</div>
+  <div class="body">
+    <div class="ko">구쿠라린</div>
+    <div class="orig">きゅうくらりん</div>
+    <div class="artist">いよわ feat. 可不</div>
+    <div class="chip">いよわ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68700</div>
+  <div class="body">
+    <div class="ko">끝없이 잿빛으로</div>
+    <div class="orig">限りなく灰色へ</div>
+    <div class="artist">すりぃ feat. 鏡音レン</div>
+    <div class="chip">すりぃ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52503</div>
+  <div class="body">
+    <div class="ko">빌런</div>
+    <div class="orig">ヴィラン</div>
+    <div class="artist">てにをは feat. flower</div>
+    <div class="chip">てにをは</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28728</div>
+  <div class="body">
+    <div class="ko">누덕누덕 스타카토</div>
+    <div class="orig">ツギハギスタッカート</div>
+    <div class="artist">とあ feat. 初音ミク</div>
+    <div class="chip">とあ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68724</div>
+  <div class="body">
+    <div class="ko">푸르게 달려라!</div>
+    <div class="orig">青く駆けろ！</div>
+    <div class="artist">まらしぃ feat. 初音ミク</div>
+    <div class="chip">まらしぃ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28961</div>
+  <div class="body">
+    <div class="ko">로키</div>
+    <div class="orig">ロキ</div>
+    <div class="artist">みきとP feat. 鏡音リン</div>
+    <div class="chip">みきとP</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27961</div>
+  <div class="body">
+    <div class="ko">에일리언 에일리언</div>
+    <div class="orig">エイリアンエイリアン</div>
+    <div class="artist">ナユタン星人 feat. 初音ミク</div>
+    <div class="chip">ナユタン星人</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28717</div>
+  <div class="body">
+    <div class="ko">태양계 디스코</div>
+    <div class="orig">太陽系デスコ</div>
+    <div class="artist">ナユタン星人 feat. 初音ミク</div>
+    <div class="chip">ナユタン星人</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28700</div>
+  <div class="body">
+    <div class="ko">샤를</div>
+    <div class="orig">シャルル</div>
+    <div class="artist">バルーン feat. flower</div>
+    <div class="chip">バルーン</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27031</div>
+  <div class="body">
+    <div class="ko">루카루카★나이트 피버</div>
+    <div class="orig">ルカルカ★ナイトフィーバー</div>
+    <div class="artist">巡音ルカ</div>
+    <div class="chip">巡音ルカ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52498</div>
+  <div class="body">
+    <div class="ko">소녀 A</div>
+    <div class="orig">少女A</div>
+    <div class="artist">椎名もた feat. 鏡音リン</div>
+    <div class="chip">椎名もた</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27906</div>
+  <div class="body">
+    <div class="ko">마음짓기</div>
+    <div class="orig">心做し</div>
+    <div class="artist">蝶々P feat. GUMI</div>
+    <div class="chip">蝶々P</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27670</div>
+  <div class="body">
+    <div class="ko">로스트원의 호곡</div>
+    <div class="orig">ロストワンの号哭</div>
+    <div class="artist">鏡音リン</div>
+    <div class="chip">鏡音リン</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">26944</div>
+  <div class="body">
+    <div class="ko">악의 하인</div>
+    <div class="orig">悪ノ召使</div>
+    <div class="artist">鏡音レン</div>
+    <div class="chip">鏡音レン</div>
+  </div>
+</div>
+</div>
 </section>
 
-<section class="section">
-
-<div class="section-title anime">
-📺 애니메이션
+<section id="버츄얼-아티스트" class="sec-virtual">
+  <h2>버츄얼 아티스트 <small>10</small></h2>
+  <div class="list">
+<div class="song">
+  <div class="num">52526</div>
+  <div class="body">
+    <div class="ko">HELP!!</div>
+    <div class="orig">HELP!!</div>
+    <div class="artist">Kobo Kanaeru</div>
+    <div class="chip">Kobo Kanaeru</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">25246</div>
-<div class="song-title">잔혹한 천사의 테제</div>
-<div class="song-artist">신세기 에반게리온 OP</div>
+  <div class="num">52400</div>
+  <div class="body">
+    <div class="ko">GHOST</div>
+    <div class="orig">GHOST</div>
+    <div class="artist">星街すいせい</div>
+    <div class="chip">星街すいせい</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">68047</div>
-<div class="song-title">홍련화</div>
-<div class="song-artist">귀멸의 칼날 OP</div>
+  <div class="num">52403</div>
+  <div class="body">
+    <div class="ko">NEXT COLOR PLANET</div>
+    <div class="orig">NEXT COLOR PLANET</div>
+    <div class="artist">星街すいせい</div>
+    <div class="chip">星街すいせい</div>
+  </div>
 </div>
 
+<div class="song">
+  <div class="num">68567</div>
+  <div class="body">
+    <div class="ko">Stellar Stellar</div>
+    <div class="orig">Stellar Stellar</div>
+    <div class="artist">星街すいせい</div>
+    <div class="chip">星街すいせい</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">54176</div>
+  <div class="body">
+    <div class="ko">소와레</div>
+    <div class="orig">ソワレ</div>
+    <div class="artist">星街すいせい</div>
+    <div class="chip">星街すいせい</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52998</div>
+  <div class="body">
+    <div class="ko">비비디바</div>
+    <div class="orig">ビビデバ</div>
+    <div class="artist">星街すいせい</div>
+    <div class="chip">星街すいせい</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">43527</div>
+  <div class="body">
+    <div class="ko">Our Tales</div>
+    <div class="orig">Our Tales</div>
+    <div class="artist">스텔라이브</div>
+    <div class="chip">스텔라이브</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52350</div>
+  <div class="body">
+    <div class="ko">별을 쫓던 빛에게</div>
+    <div class="orig">별을 쫓던 빛에게</div>
+    <div class="artist">스텔라이브</div>
+    <div class="chip">스텔라이브</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">83718</div>
+  <div class="body">
+    <div class="ko">ADDICT!ON</div>
+    <div class="orig">ADDICT!ON</div>
+    <div class="artist">아이리 칸나</div>
+    <div class="chip">아이리 칸나</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">44108</div>
+  <div class="body">
+    <div class="ko">최종화</div>
+    <div class="orig">最終花 / The Last Flower</div>
+    <div class="artist">아이리 칸나</div>
+    <div class="chip">아이리 칸나</div>
+  </div>
+</div>
+</div>
 </section>
 
-<section class="section">
-
-<div class="section-title vocaloid">
-🎹 보카로
+<section id="애니메이션" class="sec-anime">
+  <h2>애니메이션 <small>28</small></h2>
+  <h3>걸즈 밴드 크라이 <small>5</small></h3><div class="list">
+<div class="song">
+  <div class="num">52463</div>
+  <div class="body">
+    <div class="ko">더 이상 아무것도 필요 없는 미래</div>
+    <div class="orig">もう何もいらない未来</div>
+    <div class="artist">トゲナシトゲアリ</div>
+    <div class="chip">トゲナシトゲアリ</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">28961</div>
-<div class="song-title">로키 / ロキ</div>
-<div class="song-artist">미키토P feat. 카가미네 린</div>
+  <div class="num">52811</div>
+  <div class="body">
+    <div class="ko">빈 상자</div>
+    <div class="orig">空の箱</div>
+    <div class="artist">トゲナシトゲアリ</div>
+    <div class="chip">トゲナシトゲアリ</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">27984</div>
-<div class="song-title">아스노요조라 초계반</div>
-<div class="song-artist">Orangestar feat. IA</div>
+  <div class="num">52830</div>
+  <div class="body">
+    <div class="ko">공백과 카타르시스</div>
+    <div class="orig">空白とカタルシス</div>
+    <div class="artist">トゲナシトゲアリ</div>
+    <div class="chip">トゲナシトゲアリ</div>
+  </div>
 </div>
 
+<div class="song">
+  <div class="num">52903</div>
+  <div class="body">
+    <div class="ko">박채 디스플레이</div>
+    <div class="orig">薄采ディスプレイ</div>
+    <div class="artist">トゲナシトゲアリ</div>
+    <div class="chip">トゲナシトゲアリ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68490</div>
+  <div class="body">
+    <div class="ko">잡답, 우리들의 거리</div>
+    <div class="orig">雑踏、僕らの街</div>
+    <div class="artist">トゲナシトゲアリ</div>
+    <div class="chip">トゲナシトゲアリ</div>
+  </div>
+</div>
+</div><div class="list">
+<div class="song">
+  <div class="num">52717</div>
+  <div class="body">
+    <div class="ko">나는 최강</div>
+    <div class="orig">私は最強</div>
+    <div class="artist">Ado</div>
+    <div class="chip">Ado</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68868</div>
+  <div class="body">
+    <div class="ko">역광</div>
+    <div class="orig">逆光</div>
+    <div class="artist">Ado</div>
+    <div class="chip">Ado</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28214</div>
+  <div class="body">
+    <div class="ko">실루엣</div>
+    <div class="orig">シルエット</div>
+    <div class="artist">KANA-BOON</div>
+    <div class="chip">KANA-BOON</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68047</div>
+  <div class="body">
+    <div class="ko">홍련화</div>
+    <div class="orig">紅蓮華</div>
+    <div class="artist">LiSA</div>
+    <div class="chip">LiSA</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68461</div>
+  <div class="body">
+    <div class="ko">라일락</div>
+    <div class="orig">ライラック</div>
+    <div class="artist">Mrs. GREEN APPLE</div>
+    <div class="chip">Mrs. GREEN APPLE</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52471</div>
+  <div class="body">
+    <div class="ko">일적공</div>
+    <div class="orig">壱雫空</div>
+    <div class="artist">MyGO!!!!!</div>
+    <div class="chip">MyGO!!!!!</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27965</div>
+  <div class="body">
+    <div class="ko">아무것도 아니야</div>
+    <div class="orig">なんでもないや (Movie ver.)</div>
+    <div class="artist">RADWIMPS</div>
+    <div class="chip">RADWIMPS</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27944</div>
+  <div class="body">
+    <div class="ko">전전전세</div>
+    <div class="orig">前前前世 (Movie ver.)</div>
+    <div class="artist">RADWIMPS</div>
+    <div class="chip">RADWIMPS</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68999</div>
+  <div class="body">
+    <div class="ko">오렌지</div>
+    <div class="orig">オレンジ</div>
+    <div class="artist">SPYAIR</div>
+    <div class="chip">SPYAIR</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27425</div>
+  <div class="body">
+    <div class="ko">벚꽃만월</div>
+    <div class="orig">サクラミツツキ</div>
+    <div class="artist">SPYAIR</div>
+    <div class="chip">SPYAIR</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27527</div>
+  <div class="body">
+    <div class="ko">사무라이 하트</div>
+    <div class="orig">サムライハート (Some Like it Hot)</div>
+    <div class="artist">SPYAIR</div>
+    <div class="chip">SPYAIR</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28153</div>
+  <div class="body">
+    <div class="ko">unravel</div>
+    <div class="orig">Unravel</div>
+    <div class="artist">TK from 凛として時雨</div>
+    <div class="chip">TK from 凛として時雨</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68781</div>
+  <div class="body">
+    <div class="ko">아이돌</div>
+    <div class="orig">アイドル</div>
+    <div class="artist">YOASOBI</div>
+    <div class="chip">YOASOBI</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27650</div>
+  <div class="body">
+    <div class="ko">My Dearest</div>
+    <div class="orig">My Dearest</div>
+    <div class="artist">supercell</div>
+    <div class="chip">supercell</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27325</div>
+  <div class="body">
+    <div class="ko">블루 버드</div>
+    <div class="orig">ブルーバード</div>
+    <div class="artist">いきものがかり</div>
+    <div class="chip">いきものがかり</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52510</div>
+  <div class="body">
+    <div class="ko">세레나데</div>
+    <div class="orig">セレナーデ</div>
+    <div class="artist">なとり</div>
+    <div class="chip">なとり</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52461</div>
+  <div class="body">
+    <div class="ko">혁명의 길 - On The Way</div>
+    <div class="orig">革命道中 -On The Way</div>
+    <div class="artist">アイナ・ジ・エンド</div>
+    <div class="chip">アイナ・ジ・エンド</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68863</div>
+  <div class="body">
+    <div class="ko">푸른 보금자리</div>
+    <div class="orig">青のすみか</div>
+    <div class="artist">キタニタツヤ</div>
+    <div class="chip">キタニタツヤ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68571</div>
+  <div class="body">
+    <div class="ko">악마의 아이</div>
+    <div class="orig">悪魔の子</div>
+    <div class="artist">ヒグチアイ</div>
+    <div class="chip">ヒグチアイ</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52724</div>
+  <div class="body">
+    <div class="ko">커튼콜</div>
+    <div class="orig">カーテンコール</div>
+    <div class="artist">優里</div>
+    <div class="chip">優里</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">25589</div>
+  <div class="body">
+    <div class="ko">Butter-Fly</div>
+    <div class="orig">Butter-Fly</div>
+    <div class="artist">和田光司</div>
+    <div class="chip">和田光司</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68460</div>
+  <div class="body">
+    <div class="ko">departure!</div>
+    <div class="orig">departure!</div>
+    <div class="artist">小野正利</div>
+    <div class="chip">小野正利</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">25246</div>
+  <div class="body">
+    <div class="ko">잔혹한 천사의 테제</div>
+    <div class="orig">残酷な天使のテーゼ</div>
+    <div class="artist">高橋洋子</div>
+    <div class="chip">高橋洋子</div>
+  </div>
+</div>
+</div>
 </section>
 
-<section class="section">
-
-<div class="section-title virtual">
-⭐ 버츄얼 아티스트
+<section id="j-pop" class="sec-jpop">
+  <h2>J-POP <small>175</small></h2>
+  <h3>Official髭男dism <small>28</small></h3><div class="list">
+<div class="song">
+  <div class="num">52994</div>
+  <div class="body">
+    <div class="ko">115만 킬로미터의 필름</div>
+    <div class="orig">115万キロのフィルム</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
 </div>
 
 <div class="song">
-<div class="song-number">52526</div>
-<div class="song-title">HELP!!</div>
-<div class="song-artist">Kobo Kanaeru</div>
+  <div class="num">52437</div>
+  <div class="body">
+    <div class="ko">50%</div>
+    <div class="orig">50%</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
 </div>
 
+<div class="song">
+  <div class="num">52507</div>
+  <div class="body">
+    <div class="ko">Anarchy</div>
+    <div class="orig">Anarchy</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68828</div>
+  <div class="body">
+    <div class="ko">Chessboard</div>
+    <div class="orig">Chessboard</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68407</div>
+  <div class="body">
+    <div class="ko">Cry Baby</div>
+    <div class="orig">Cry Baby</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68295</div>
+  <div class="body">
+    <div class="ko">HELLO</div>
+    <div class="orig">HELLO</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68200</div>
+  <div class="body">
+    <div class="ko">I LOVE...</div>
+    <div class="orig">I LOVE...</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68261</div>
+  <div class="body">
+    <div class="ko">Laughter</div>
+    <div class="orig">Laughter</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52441</div>
+  <div class="body">
+    <div class="ko">Make Me Wonder</div>
+    <div class="orig">Make Me Wonder</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68058</div>
+  <div class="body">
+    <div class="ko">Pretender</div>
+    <div class="orig">Pretender</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68916</div>
+  <div class="body">
+    <div class="ko">SOULSOUP</div>
+    <div class="orig">SOULSOUP</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52415</div>
+  <div class="body">
+    <div class="ko">Same Blue</div>
+    <div class="orig">Same Blue</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52406</div>
+  <div class="body">
+    <div class="ko">Sanitizer</div>
+    <div class="orig">Sanitizer</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52711</div>
+  <div class="body">
+    <div class="ko">Sharon</div>
+    <div class="orig">Sharon</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68850</div>
+  <div class="body">
+    <div class="ko">Stand By You</div>
+    <div class="orig">Stand By You</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68720</div>
+  <div class="body">
+    <div class="ko">Subtitle</div>
+    <div class="orig">Subtitle</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68838</div>
+  <div class="body">
+    <div class="ko">TATTOO</div>
+    <div class="orig">TATTOO</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68366</div>
+  <div class="body">
+    <div class="ko">Universe</div>
+    <div class="orig">Universe</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52420</div>
+  <div class="body">
+    <div class="ko">우라미츠라미키와미</div>
+    <div class="orig">うらみつらみきわみ</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52973</div>
+  <div class="body">
+    <div class="ko">라시사</div>
+    <div class="orig">らしさ</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68104</div>
+  <div class="body">
+    <div class="ko">예스터데이</div>
+    <div class="orig">イエスタデイ</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52527</div>
+  <div class="body">
+    <div class="ko">엘더 플라워</div>
+    <div class="orig">エルダーフラワー</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68087</div>
+  <div class="body">
+    <div class="ko">노 다웃</div>
+    <div class="orig">ノーダウト</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68766</div>
+  <div class="body">
+    <div class="ko">화이트 노이즈</div>
+    <div class="orig">ホワイトノイズ</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68600</div>
+  <div class="body">
+    <div class="ko">믹스 너츠</div>
+    <div class="orig">ミックスナッツ</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68086</div>
+  <div class="body">
+    <div class="ko">슈쿠메이</div>
+    <div class="orig">宿命</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68906</div>
+  <div class="body">
+    <div class="ko">일상</div>
+    <div class="orig">日常</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52475</div>
+  <div class="body">
+    <div class="ko">이단의 스타</div>
+    <div class="orig">異端なスター</div>
+    <div class="artist">Official髭男dism</div>
+    <div class="chip">Official髭男dism</div>
+  </div>
+</div>
+</div><h3>King Gnu <small>23</small></h3><div class="list">
+<div class="song">
+  <div class="num">52501</div>
+  <div class="body">
+    <div class="ko">AIZO</div>
+    <div class="orig">AIZO</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68533</div>
+  <div class="body">
+    <div class="ko">BOY</div>
+    <div class="orig">BOY</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52838</div>
+  <div class="body">
+    <div class="ko">Overflow</div>
+    <div class="orig">Overflow</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68164</div>
+  <div class="body">
+    <div class="ko">Prayer X</div>
+    <div class="orig">Prayer X</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52958</div>
+  <div class="body">
+    <div class="ko">SO BAD</div>
+    <div class="orig">SO BAD</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68876</div>
+  <div class="body">
+    <div class="ko">SPECIALZ</div>
+    <div class="orig">SPECIALZ</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52840</div>
+  <div class="body">
+    <div class="ko">TWILIGHT!!!</div>
+    <div class="orig">TWILIGHT!!!</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68194</div>
+  <div class="body">
+    <div class="ko">Teenager Forever</div>
+    <div class="orig">Teenager Forever</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52754</div>
+  <div class="body">
+    <div class="ko">The hole</div>
+    <div class="orig">The hole</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52474</div>
+  <div class="body">
+    <div class="ko">Tokyo Rendez-Vous</div>
+    <div class="orig">Tokyo Rendez-Vous</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52835</div>
+  <div class="body">
+    <div class="ko">Vinyl</div>
+    <div class="orig">Vinyl</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52436</div>
+  <div class="body">
+    <div class="ko">뿌리</div>
+    <div class="orig">ねっこ</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68585</div>
+  <div class="body">
+    <div class="ko">카멜레온</div>
+    <div class="orig">カメレオン</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68556</div>
+  <div class="body">
+    <div class="ko">일도</div>
+    <div class="orig">一途</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68346</div>
+  <div class="body">
+    <div class="ko">삼문소설</div>
+    <div class="orig">三文小説</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68124</div>
+  <div class="body">
+    <div class="ko">우산</div>
+    <div class="orig">傘</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68379</div>
+  <div class="body">
+    <div class="ko">거품</div>
+    <div class="orig">泡</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68031</div>
+  <div class="body">
+    <div class="ko">백일</div>
+    <div class="orig">白日</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52849</div>
+  <div class="body">
+    <div class="ko">파열</div>
+    <div class="orig">破裂</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68903</div>
+  <div class="body">
+    <div class="ko">유리창</div>
+    <div class="orig">硝子窓</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68561</div>
+  <div class="body">
+    <div class="ko">역몽</div>
+    <div class="orig">逆夢</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68472</div>
+  <div class="body">
+    <div class="ko">비 찬란</div>
+    <div class="orig">雨燦々</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68135</div>
+  <div class="body">
+    <div class="ko">비행정</div>
+    <div class="orig">飛行艇</div>
+    <div class="artist">King Gnu</div>
+    <div class="chip">King Gnu</div>
+  </div>
+</div>
+</div><h3>요네즈 켄시 <small>40</small></h3><div class="list">
+<div class="song">
+  <div class="num">28750</div>
+  <div class="body">
+    <div class="ko">우치아게 하나비</div>
+    <div class="orig">打上花火</div>
+    <div class="artist">DAOKO × 米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68173</div>
+  <div class="body">
+    <div class="ko">NANIMONO</div>
+    <div class="orig">NANIMONO</div>
+    <div class="artist">中田ヤスタカ feat. 米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52977</div>
+  <div class="body">
+    <div class="ko">1991</div>
+    <div class="orig">1991</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52828</div>
+  <div class="body">
+    <div class="ko">Azalea</div>
+    <div class="orig">Azalea</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52796</div>
+  <div class="body">
+    <div class="ko">BOW AND ARROW</div>
+    <div class="orig">BOW AND ARROW</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28983</div>
+  <div class="body">
+    <div class="ko">Flamingo</div>
+    <div class="orig">Flamingo</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52959</div>
+  <div class="body">
+    <div class="ko">IRIS OUT</div>
+    <div class="orig">IRIS OUT</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68677</div>
+  <div class="body">
+    <div class="ko">KICK BACK</div>
+    <div class="orig">KICK BACK</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68495</div>
+  <div class="body">
+    <div class="ko">LADY</div>
+    <div class="orig">LADY</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28686</div>
+  <div class="body">
+    <div class="ko">LOSER</div>
+    <div class="orig">LOSER</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52952</div>
+  <div class="body">
+    <div class="ko">LOST CORNER</div>
+    <div class="orig">LOST CORNER</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28822</div>
+  <div class="body">
+    <div class="ko">Lemon</div>
+    <div class="orig">Lemon</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28596</div>
+  <div class="body">
+    <div class="ko">MAD HEAD LOVE</div>
+    <div class="orig">MAD HEAD LOVE</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52892</div>
+  <div class="body">
+    <div class="ko">M87</div>
+    <div class="orig">M八七</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52481</div>
+  <div class="body">
+    <div class="ko">POP SONG</div>
+    <div class="orig">POP SONG</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68423</div>
+  <div class="body">
+    <div class="ko">Pale Blue</div>
+    <div class="orig">Pale Blue</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52905</div>
+  <div class="body">
+    <div class="ko">Plazma</div>
+    <div class="orig">Plazma</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52737</div>
+  <div class="body">
+    <div class="ko">RED OUT</div>
+    <div class="orig">RED OUT</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28660</div>
+  <div class="body">
+    <div class="ko">orion</div>
+    <div class="orig">orion</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27915</div>
+  <div class="body">
+    <div class="ko">vivi</div>
+    <div class="orig">vivi</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52725</div>
+  <div class="body">
+    <div class="ko">가라쿠타</div>
+    <div class="orig">がらくた</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52580</div>
+  <div class="body">
+    <div class="ko">사요나라 마타이츠카!</div>
+    <div class="orig">さよーならまたいつか！- Sayonara</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52728</div>
+  <div class="body">
+    <div class="ko">마치가이사가시</div>
+    <div class="orig">まちがいさがし</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52764</div>
+  <div class="body">
+    <div class="ko">유메우츠츠</div>
+    <div class="orig">ゆめうつつ</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28607</div>
+  <div class="body">
+    <div class="ko">아이네 클라이네</div>
+    <div class="orig">アイネクライネ</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27941</div>
+  <div class="body">
+    <div class="ko">고고 유령선</div>
+    <div class="orig">ゴーゴー幽霊船</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68089</div>
+  <div class="body">
+    <div class="ko">파프리카</div>
+    <div class="orig">パプリカ</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28720</div>
+  <div class="body">
+    <div class="ko">피스 사인</div>
+    <div class="orig">ピースサイン</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27945</div>
+  <div class="body">
+    <div class="ko">메트로놈</div>
+    <div class="orig">メトロノーム</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52997</div>
+  <div class="body">
+    <div class="ko">멜랑콜리 키친</div>
+    <div class="orig">メランコリーキッチン</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68840</div>
+  <div class="body">
+    <div class="ko">지구본 - Spinning Globe</div>
+    <div class="orig">地球儀 - Spinning Globe</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68300</div>
+  <div class="body">
+    <div class="ko">감전</div>
+    <div class="orig">感電</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28795</div>
+  <div class="body">
+    <div class="ko">춘뢰</div>
+    <div class="orig">春雷</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68824</div>
+  <div class="body">
+    <div class="ko">달을 보고 있었다</div>
+    <div class="orig">月を見ていた</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52430</div>
+  <div class="body">
+    <div class="ko">사신</div>
+    <div class="orig">死神</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68478</div>
+  <div class="body">
+    <div class="ko">매일 - Every Day</div>
+    <div class="orig">毎日 - Every Day</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68019</div>
+  <div class="body">
+    <div class="ko">바다의 유령</div>
+    <div class="orig">海の幽霊</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68094</div>
+  <div class="body">
+    <div class="ko">말과 사슴</div>
+    <div class="orig">馬と鹿</div>
+    <div class="artist">米津玄師</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52972</div>
+  <div class="body">
+    <div class="ko">JANE DOE</div>
+    <div class="orig">JANE DOE</div>
+    <div class="artist">米津玄師 &amp; 宇多田ヒカル</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28789</div>
+  <div class="body">
+    <div class="ko">잿빛과 푸름</div>
+    <div class="orig">灰色と青</div>
+    <div class="artist">米津玄師 + 菅田将暉</div>
+    <div class="chip">요네즈 켄시</div>
+  </div>
+</div>
+</div><h3>요루시카 <small>32</small></h3><div class="list">
+<div class="song">
+  <div class="num">57754</div>
+  <div class="body">
+    <div class="ko">DARMA GRAND PRIX</div>
+    <div class="orig">DARMA GRAND PRIX</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68061</div>
+  <div class="body">
+    <div class="ko">그저 네게 맑아라</div>
+    <div class="orig">ただ君に晴れ</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68049</div>
+  <div class="body">
+    <div class="ko">그래서 나는 음악을 그만두었다</div>
+    <div class="orig">だから僕は音楽を辞めた</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52708</div>
+  <div class="body">
+    <div class="ko">아포리아</div>
+    <div class="orig">アポリア</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68456</div>
+  <div class="body">
+    <div class="ko">앨저넌</div>
+    <div class="orig">アルジャーノン</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68752</div>
+  <div class="body">
+    <div class="ko">텔레패스</div>
+    <div class="orig">テレパス</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68243</div>
+  <div class="body">
+    <div class="ko">노틸러스</div>
+    <div class="orig">ノーチラス</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68721</div>
+  <div class="body">
+    <div class="ko">브레멘</div>
+    <div class="orig">ブレーメン</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52424</div>
+  <div class="body">
+    <div class="ko">플레이시크</div>
+    <div class="orig">プレイシック</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52592</div>
+  <div class="body">
+    <div class="ko">루바토</div>
+    <div class="orig">ルバート</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52513</div>
+  <div class="body">
+    <div class="ko">레플리칸트</div>
+    <div class="orig">レプリカント</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52504</div>
+  <div class="body">
+    <div class="ko">천조</div>
+    <div class="orig">千鳥</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68418</div>
+  <div class="body">
+    <div class="ko">마타사부로</div>
+    <div class="orig">又三郎</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68309</div>
+  <div class="body">
+    <div class="ko">거짓말쟁이</div>
+    <div class="orig">嘘月</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68662</div>
+  <div class="body">
+    <div class="ko">야행</div>
+    <div class="orig">夜行</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68702</div>
+  <div class="body">
+    <div class="ko">좌우맹</div>
+    <div class="orig">左右盲</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52746</div>
+  <div class="body">
+    <div class="ko">잊어 주세요</div>
+    <div class="orig">忘れてください</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68329</div>
+  <div class="body">
+    <div class="ko">사상범</div>
+    <div class="orig">思想犯</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52726</div>
+  <div class="body">
+    <div class="ko">사양</div>
+    <div class="orig">斜陽</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68626</div>
+  <div class="body">
+    <div class="ko">봄팔이</div>
+    <div class="orig">春ひさぎ</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68365</div>
+  <div class="body">
+    <div class="ko">봄도둑</div>
+    <div class="orig">春泥棒</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68953</div>
+  <div class="body">
+    <div class="ko">맑은 날</div>
+    <div class="orig">晴る</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52898</div>
+  <div class="body">
+    <div class="ko">화성인</div>
+    <div class="orig">火星人</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68409</div>
+  <div class="body">
+    <div class="ko">도작</div>
+    <div class="orig">盗作</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68408</div>
+  <div class="body">
+    <div class="ko">미인계</div>
+    <div class="orig">美人局</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68230</div>
+  <div class="body">
+    <div class="ko">꽃에 망령</div>
+    <div class="orig">花に亡霊</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52462</div>
+  <div class="body">
+    <div class="ko">아카네</div>
+    <div class="orig">茜</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68078</div>
+  <div class="body">
+    <div class="ko">말해 줘。</div>
+    <div class="orig">言って。</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52488</div>
+  <div class="body">
+    <div class="ko">패배자에게 앵콜은 필요 없어</div>
+    <div class="orig">負け犬にアンコールはいらない</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68450</div>
+  <div class="body">
+    <div class="ko">낙향</div>
+    <div class="orig">都落ち</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68212</div>
+  <div class="body">
+    <div class="ko">비와 카푸치노</div>
+    <div class="orig">雨とカプチーノ</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68339</div>
+  <div class="body">
+    <div class="ko">바람을 먹다</div>
+    <div class="orig">風を食む</div>
+    <div class="artist">ヨルシカ</div>
+    <div class="chip">요루시카</div>
+  </div>
+</div>
+</div><h3>Vaundy <small>4</small></h3><div class="list">
+<div class="song">
+  <div class="num">52412</div>
+  <div class="body">
+    <div class="ko">시와아와세</div>
+    <div class="orig">しわあわせ</div>
+    <div class="artist">Vaundy</div>
+    <div class="chip">Vaundy</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52988</div>
+  <div class="body">
+    <div class="ko">괴수의 꽃노래</div>
+    <div class="orig">怪獣の花唄</div>
+    <div class="artist">Vaundy</div>
+    <div class="chip">Vaundy</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52428</div>
+  <div class="body">
+    <div class="ko">사랑 감기에 실려</div>
+    <div class="orig">恋風邪にのせて</div>
+    <div class="artist">Vaundy</div>
+    <div class="chip">Vaundy</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68807</div>
+  <div class="body">
+    <div class="ko">무희</div>
+    <div class="orig">踊り子</div>
+    <div class="artist">Vaundy</div>
+    <div class="chip">Vaundy</div>
+  </div>
+</div>
+</div><h3>back number <small>5</small></h3><div class="list">
+<div class="song">
+  <div class="num">27762</div>
+  <div class="body">
+    <div class="ko">히로인</div>
+    <div class="orig">ヒロイン</div>
+    <div class="artist">back number</div>
+    <div class="chip">back number</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52517</div>
+  <div class="body">
+    <div class="ko">일요일</div>
+    <div class="orig">日曜日</div>
+    <div class="artist">back number</div>
+    <div class="chip">back number</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68446</div>
+  <div class="body">
+    <div class="ko">수평선</div>
+    <div class="orig">水平線</div>
+    <div class="artist">back number</div>
+    <div class="chip">back number</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68719</div>
+  <div class="body">
+    <div class="ko">꽃다발</div>
+    <div class="orig">花束</div>
+    <div class="artist">back number</div>
+    <div class="chip">back number</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">27805</div>
+  <div class="body">
+    <div class="ko">타카네노 하나코상</div>
+    <div class="orig">高嶺の花子さん</div>
+    <div class="artist">back number</div>
+    <div class="chip">back number</div>
+  </div>
+</div>
+</div><h3>Ado <small>2</small></h3><div class="list">
+<div class="song">
+  <div class="num">68458</div>
+  <div class="body">
+    <div class="ko">시끄러워</div>
+    <div class="orig">うっせぇわ</div>
+    <div class="artist">Ado</div>
+    <div class="chip">Ado</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52522</div>
+  <div class="body">
+    <div class="ko">踊</div>
+    <div class="orig">踊</div>
+    <div class="artist">Ado</div>
+    <div class="chip">Ado</div>
+  </div>
+</div>
+</div><h3>Mrs. GREEN APPLE <small>5</small></h3><div class="list">
+<div class="song">
+  <div class="num">68095</div>
+  <div class="body">
+    <div class="ko">인페르노</div>
+    <div class="orig">インフェルノ</div>
+    <div class="artist">Mrs. GREEN APPLE</div>
+    <div class="chip">Mrs. GREEN APPLE</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52844</div>
+  <div class="body">
+    <div class="ko">케세라세라</div>
+    <div class="orig">ケセラセラ</div>
+    <div class="artist">Mrs. GREEN APPLE</div>
+    <div class="chip">Mrs. GREEN APPLE</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68620</div>
+  <div class="body">
+    <div class="ko">댄스홀</div>
+    <div class="orig">ダンスホール</div>
+    <div class="artist">Mrs. GREEN APPLE</div>
+    <div class="chip">Mrs. GREEN APPLE</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68248</div>
+  <div class="body">
+    <div class="ko">나는 말이야</div>
+    <div class="orig">僕のこと</div>
+    <div class="artist">Mrs. GREEN APPLE</div>
+    <div class="chip">Mrs. GREEN APPLE</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68127</div>
+  <div class="body">
+    <div class="ko">푸름과 여름</div>
+    <div class="orig">青と夏</div>
+    <div class="artist">Mrs. GREEN APPLE</div>
+    <div class="chip">Mrs. GREEN APPLE</div>
+  </div>
+</div>
+</div><h3>優里 <small>3</small></h3><div class="list">
+<div class="song">
+  <div class="num">68333</div>
+  <div class="body">
+    <div class="ko">드라이 플라워</div>
+    <div class="orig">ドライフラワー</div>
+    <div class="artist">優里</div>
+    <div class="chip">優里</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">68553</div>
+  <div class="body">
+    <div class="ko">베텔기우스</div>
+    <div class="orig">ベテルギウス</div>
+    <div class="artist">優里</div>
+    <div class="chip">優里</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52773</div>
+  <div class="body">
+    <div class="ko">레오</div>
+    <div class="orig">レオ</div>
+    <div class="artist">優里</div>
+    <div class="chip">優里</div>
+  </div>
+</div>
+</div><h3>YOASOBI <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68381</div>
+  <div class="body">
+    <div class="ko">밤을 달리다</div>
+    <div class="orig">夜に駆ける</div>
+    <div class="artist">YOASOBI</div>
+    <div class="chip">YOASOBI</div>
+  </div>
+</div>
+</div><h3>あいみょん <small>2</small></h3><div class="list">
+<div class="song">
+  <div class="num">28927</div>
+  <div class="body">
+    <div class="ko">마리골드</div>
+    <div class="orig">マリーゴールド</div>
+    <div class="artist">あいみょん</div>
+    <div class="chip">あいみょん</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">28907</div>
+  <div class="body">
+    <div class="ko">사랑을 전하고 싶다든가</div>
+    <div class="orig">愛を伝えたいだとか</div>
+    <div class="artist">あいみょん</div>
+    <div class="chip">あいみょん</div>
+  </div>
+</div>
+</div><h3>Creepy Nuts <small>2</small></h3><div class="list">
+<div class="song">
+  <div class="num">68950</div>
+  <div class="body">
+    <div class="ko">Bling-Bang-Bang-Born</div>
+    <div class="orig">Bling-Bang-Bang-Born</div>
+    <div class="artist">Creepy Nuts</div>
+    <div class="chip">Creepy Nuts</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52472</div>
+  <div class="body">
+    <div class="ko">노비시로</div>
+    <div class="orig">のびしろ</div>
+    <div class="artist">Creepy Nuts</div>
+    <div class="chip">Creepy Nuts</div>
+  </div>
+</div>
+</div><h3>Saucy Dog <small>2</small></h3><div class="list">
+<div class="song">
+  <div class="num">52457</div>
+  <div class="body">
+    <div class="ko">아, 아, 아……</div>
+    <div class="orig">あぁ、もう。</div>
+    <div class="artist">Saucy Dog</div>
+    <div class="chip">Saucy Dog</div>
+  </div>
+</div>
+
+<div class="song">
+  <div class="num">52464</div>
+  <div class="body">
+    <div class="ko">신데렐라 보이</div>
+    <div class="orig">シンデレラボーイ</div>
+    <div class="artist">Saucy Dog</div>
+    <div class="chip">Saucy Dog</div>
+  </div>
+</div>
+</div><h3>UNISON SQUARE GARDEN <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">27737</div>
+  <div class="body">
+    <div class="ko">슈가송과 비터스텝</div>
+    <div class="orig">シュガーソングとビターステップ</div>
+    <div class="artist">UNISON SQUARE GARDEN</div>
+    <div class="chip">UNISON SQUARE GARDEN</div>
+  </div>
+</div>
+</div><h3>松田聖子 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">27121</div>
+  <div class="body">
+    <div class="ko">푸른 산호초</div>
+    <div class="orig">青い珊瑚礁</div>
+    <div class="artist">松田聖子</div>
+    <div class="chip">松田聖子</div>
+  </div>
+</div>
+</div><h3>amazarashi <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">28688</div>
+  <div class="body">
+    <div class="ko">내가 죽으려고 생각한 것은</div>
+    <div class="orig">僕が死のうと思ったのは</div>
+    <div class="artist">amazarashi</div>
+    <div class="chip">amazarashi</div>
+  </div>
+</div>
+</div><h3>tuki. <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52788</div>
+  <div class="body">
+    <div class="ko">만찬가</div>
+    <div class="orig">晩餐歌</div>
+    <div class="artist">tuki.</div>
+    <div class="chip">tuki.</div>
+  </div>
+</div>
+</div><h3>SEKAI NO OWARI <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52480</div>
+  <div class="body">
+    <div class="ko">선물</div>
+    <div class="orig">プレゼント</div>
+    <div class="artist">SEKAI NO OWARI</div>
+    <div class="chip">SEKAI NO OWARI</div>
+  </div>
+</div>
+</div><h3>涼宮ハルヒ / 平野綾 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">26235</div>
+  <div class="body">
+    <div class="ko">God knows...</div>
+    <div class="orig">God knows...</div>
+    <div class="artist">涼宮ハルヒ / 平野綾</div>
+    <div class="chip">涼宮ハルヒ / 平野綾</div>
+  </div>
+</div>
+</div><h3>チョーキューメイ <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68815</div>
+  <div class="body">
+    <div class="ko">당신의 연인이 되고 싶어</div>
+    <div class="orig">貴方の恋人になりたい</div>
+    <div class="artist">チョーキューメイ</div>
+    <div class="chip">チョーキューメイ</div>
+  </div>
+</div>
+</div><h3>X-JAPAN <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">6773</div>
+  <div class="body">
+    <div class="ko">Endless Rain</div>
+    <div class="orig">Endless Rain</div>
+    <div class="artist">X-JAPAN</div>
+    <div class="chip">X-JAPAN</div>
+  </div>
+</div>
+</div><h3>Leina <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68961</div>
+  <div class="body">
+    <div class="ko">선잠</div>
+    <div class="orig">うたたね</div>
+    <div class="artist">Leina</div>
+    <div class="chip">Leina</div>
+  </div>
+</div>
+</div><h3>椎名林檎 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">25837</div>
+  <div class="body">
+    <div class="ko">마루노우치 새디스틱</div>
+    <div class="orig">丸の内サディスティック</div>
+    <div class="artist">椎名林檎</div>
+    <div class="chip">椎名林檎</div>
+  </div>
+</div>
+</div><h3>Novelbright <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68419</div>
+  <div class="body">
+    <div class="ko">Walking with you</div>
+    <div class="orig">Walking with you</div>
+    <div class="artist">Novelbright</div>
+    <div class="chip">Novelbright</div>
+  </div>
+</div>
+</div><h3>星野源 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">27982</div>
+  <div class="body">
+    <div class="ko">恋</div>
+    <div class="orig">恋</div>
+    <div class="artist">星野源</div>
+    <div class="chip">星野源</div>
+  </div>
+</div>
+</div><h3>緑黄色社会 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68562</div>
+  <div class="body">
+    <div class="ko">Mela!</div>
+    <div class="orig">Mela!</div>
+    <div class="artist">緑黄色社会</div>
+    <div class="chip">緑黄色社会</div>
+  </div>
+</div>
+</div><h3>なとり <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52402</div>
+  <div class="body">
+    <div class="ko">프로포즈</div>
+    <div class="orig">プロポーズ</div>
+    <div class="artist">なとり</div>
+    <div class="chip">なとり</div>
+  </div>
+</div>
+</div><h3>DISH// <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52454</div>
+  <div class="body">
+    <div class="ko">고양이</div>
+    <div class="orig">猫</div>
+    <div class="artist">DISH//</div>
+    <div class="chip">DISH//</div>
+  </div>
+</div>
+</div><h3>yama <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52453</div>
+  <div class="body">
+    <div class="ko">봄을 알리다</div>
+    <div class="orig">春を告げる</div>
+    <div class="artist">yama</div>
+    <div class="chip">yama</div>
+  </div>
+</div>
+</div><h3>ロクデナシ <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52450</div>
+  <div class="body">
+    <div class="ko">알비레오</div>
+    <div class="orig">アルビレオ</div>
+    <div class="artist">ロクデナシ</div>
+    <div class="chip">ロクデナシ</div>
+  </div>
+</div>
+</div><h3>尾崎豊 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">25049</div>
+  <div class="body">
+    <div class="ko">I love you</div>
+    <div class="orig">I love you</div>
+    <div class="artist">尾崎豊</div>
+    <div class="chip">尾崎豊</div>
+  </div>
+</div>
+</div><h3>『ユイカ』 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68523</div>
+  <div class="body">
+    <div class="ko">좋아하니까。</div>
+    <div class="orig">好きだから。</div>
+    <div class="artist">『ユイカ』</div>
+    <div class="chip">『ユイカ』</div>
+  </div>
+</div>
+</div><h3>Tani Yuuki <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52444</div>
+  <div class="body">
+    <div class="ko">W / X / Y</div>
+    <div class="orig">W / X / Y</div>
+    <div class="artist">Tani Yuuki</div>
+    <div class="chip">Tani Yuuki</div>
+  </div>
+</div>
+</div><h3>シド <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">27062</div>
+  <div class="body">
+    <div class="ko">레인</div>
+    <div class="orig">レイン</div>
+    <div class="artist">シド</div>
+    <div class="chip">シド</div>
+  </div>
+</div>
+</div><h3>Hump Back <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52756</div>
+  <div class="body">
+    <div class="ko">배계, 소년이여</div>
+    <div class="orig">拝啓, 少年よ</div>
+    <div class="artist">Hump Back</div>
+    <div class="chip">Hump Back</div>
+  </div>
+</div>
+</div><h3>藤井風 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52466</div>
+  <div class="body">
+    <div class="ko">사춘기병</div>
+    <div class="orig">青春病</div>
+    <div class="artist">藤井風</div>
+    <div class="chip">藤井風</div>
+  </div>
+</div>
+</div><h3>imase <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">68740</div>
+  <div class="body">
+    <div class="ko">NIGHT DANCER</div>
+    <div class="orig">NIGHT DANCER</div>
+    <div class="artist">imase</div>
+    <div class="chip">imase</div>
+  </div>
+</div>
+</div><h3>CUTIE STREET <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52410</div>
+  <div class="body">
+    <div class="ko">귀엽기만 해선 안 되나요?</div>
+    <div class="orig">かわいいだけじゃ だめですか?</div>
+    <div class="artist">CUTIE STREET</div>
+    <div class="chip">CUTIE STREET</div>
+  </div>
+</div>
+</div><h3>ずっと真夜中でいいのに。 <small>1</small></h3><div class="list">
+<div class="song">
+  <div class="num">52469</div>
+  <div class="body">
+    <div class="ko">미러튠</div>
+    <div class="orig">ミラーチューン</div>
+    <div class="artist">ずっと真夜中でいいのに。</div>
+    <div class="chip">ずっと真夜中でいいのに。</div>
+  </div>
+</div>
+</div>
 </section>
+</main>
+<a class="top" href="#top">↑</a>
 
-<script>
-const searchInput = document.getElementById("searchInput");
+<div class="footer">
+  Curated by <b>Heki</b> · Built with <b>Arte</b>
+</div>
 
-searchInput.addEventListener("input", function(){
 
-const keyword = this.value.toLowerCase();
 
-document.querySelectorAll(".song").forEach(song=>{
-
-const text = song.innerText.toLowerCase();
-
-song.style.display =
-text.includes(keyword)
-? "block"
-: "none";
-
-});
-
-});
-</script>
-
-</body>
-</html>
+</body></html>
